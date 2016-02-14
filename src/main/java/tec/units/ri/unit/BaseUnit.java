@@ -29,10 +29,12 @@
  */
 package tec.units.ri.unit;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.measure.Dimension;
 import javax.measure.Quantity;
+import javax.measure.Unit;
 import javax.measure.UnitConverter;
 
 import tec.units.ri.AbstractConverter;
@@ -41,26 +43,25 @@ import tec.units.ri.quantity.QuantityDimension;
 
 /**
  * <p> This class represents the building blocks on top of which all others
- *     physical units are created. Base units are always unscaled SI units.</p>
- * 
+ * physical units are created. Base units are always unscaled SI units.</p>
+ * <p>
  * <p> When using the standard model, all seven SI base units
- *     are dimensionally independent.</p>
+ * are dimensionally independent.</p>
  *
- * @see <a href="http://en.wikipedia.org/wiki/SI_base_unit">
- *       Wikipedia: SI base unit</a>
- *
- * @author  <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle</a>
+ * @author <a href="mailto:jean-marie@dautelle.com">Jean-Marie Dautelle</a>
  * @author <a href="mailto:units@catmedia.us">Werner Keil</a>
  * @version 0.5, Sep 20, 2015
+ * @see <a href="http://en.wikipedia.org/wiki/SI_base_unit">
+ * Wikipedia: SI base unit</a>
  */
 public final class BaseUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> {
 
     /**
-	 * 
-	 */
+     *
+     */
 //	private static final long serialVersionUID = 1721629233768215930L;
 
-	/**
+    /**
      * Holds the symbol.
      */
     private final String symbol;
@@ -78,11 +79,11 @@ public final class BaseUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> {
     public BaseUnit(String symbol, Dimension dimension) {
         this.symbol = symbol;
         if (dimension == null) {
-        	dimension = QuantityDimension.getInstance(' '); // FIXME try pass char here
+            dimension = QuantityDimension.getInstance(' '); // FIXME try pass char here
         }
         this.dimension = dimension;
     }
-    
+
     /**
      * Creates a base unit having the specified symbol and dimension.
      *
@@ -92,14 +93,14 @@ public final class BaseUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> {
         this.symbol = symbol;
         this.dimension = QuantityDimension.NONE;
     }
-    
+
     /**
      * Creates a base unit having the specified symbol and name.
      *
      * @param symbol the symbol of this base unit.
-     * @param name the name of this base unit.
+     * @param name   the name of this base unit.
      * @throws IllegalArgumentException if the specified symbol is
-     *         associated to a different unit.
+     *                                  associated to a different unit.
      */
     public BaseUnit(String symbol, String name) {
         this(symbol);
@@ -141,7 +142,7 @@ public final class BaseUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> {
         if (this == that) return true;
         if (!(that instanceof BaseUnit)) return false;
         BaseUnit<?> thatUnit = (BaseUnit<?>) that;
-        return this.symbol.equals(thatUnit.symbol) 
+        return this.symbol.equals(thatUnit.symbol)
                 && this.dimension.equals(thatUnit.dimension);
     }
 
@@ -150,9 +151,11 @@ public final class BaseUnit<Q extends Quantity<Q>> extends AbstractUnit<Q> {
         return symbol.hashCode();
     }
 
-	@Override
-	public Map<? extends AbstractUnit<Q>, Integer> getProductUnits() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Map<Unit<?>, Integer> getProductUnits() {
+        final Map<Unit<?>, Integer> units = new HashMap<Unit<?>, Integer>();
+        units.put(this, 1);
+
+        return units;
+    }
 }
