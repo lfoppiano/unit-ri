@@ -34,26 +34,18 @@ import javax.measure.quantity.Length;
 import org.junit.Test;
 
 import tec.units.ri.AbstractUnit;
-
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 /**
+ *
  * @author Werner Keil
  */
 public class BaseUnitTest {
-
-    private AbstractUnit<Length> sut = new BaseUnit<Length>("m");
+	
+	private AbstractUnit<Length> sut = new BaseUnit<Length>("m");
 
     @Test
     public void testEquals() {
-        assertTrue(sut.equals(new BaseUnit<Length>("m")));
-    }
-
-
-    @Test
-    public void testGetProducts() throws Exception {
-        assertThat(sut.getProductUnits().size(), is(1));
-        assertThat(sut.getProductUnits().toString(), is("{m=1}"));
+    	assertTrue(sut.equals(new BaseUnit<Length>("m")));
     }
 }
